@@ -19,23 +19,62 @@ public class TarefaController {
         return tarefas;
     }
 
-    public String verDescricao(int id){
-        return Tarefa.Object.getId();
+    public void adicionarTarefa(String nome, String descricao) {
+        try {
+            Tarefa novaTarefa;
+            if (descricao == null || descricao.trim().isEmpty()) {
+                novaTarefa = new Tarefa(nome);
+            } else {
+                novaTarefa = new Tarefa(nome,descricao);
+            }
+            tarefas.add(novaTarefa);
+
+        } catch (IllegalArgumentException e) {
+            view.mostrarErro(e.getMessage());
+        }
     }
 
+    public String verDescricao(int id) {
+        Tarefa tarefa = buscarTarefaId(id);
+        if (tarefa == null) return "Tarefa não encontrada";
+
+        String desc = tarefa.getDescricao();
+        if (desc == null || desc.trim().isEmpty())
+            return "Tarefa não possui descrição";
+        else
+            return desc;
+    }
+
+
+
+
     public boolean removerTarefa(int id) {
-        return true;
+        Tarefa tarefa = buscarTarefaId(id);
+        if (tarefa != null) {
+            tarefas.remove(tarefa);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean completarTarefa(int id) {
-        return true;
+        Tarefa tarefa = buscarTarefaId(id);
+        if (tarefa != null) {
+            tarefa.toggleCompleta();
+            return true;
+        }
+        return false;
     }
 
-    public Tarefa buscarId(int id) {
-        return Tarefa.Object;
+    public Tarefa buscarTarefaId(int id) {
+            for (Tarefa tarefa : getTarefas()) {
+                if (tarefa.getId() == id) {
+                    return tarefa;
+                }
+        }
+        return null;
     }
 
-    public void adicionarTarefa(String nome, String descricao) {
 
-    }
 }

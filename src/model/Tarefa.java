@@ -7,12 +7,19 @@ public class Tarefa {
     private String descricao;
     private boolean isCompleta;
 
-    public Tarefa(String nome, String descricao){
-        contador++;
-        id = contador;
-        setNome(nome);
-        setDescricao(descricao);
-        isCompleta = false;
+    public Tarefa(String nome){
+        this.setNome(nome);
+        this.setDescricao("");
+        this.id = ++contador;
+        this.isCompleta = false;
+    }
+
+
+    public Tarefa(String nome, String descricao) {
+        this.setNome(nome);
+        this.setDescricao(descricao);
+        this.id = ++contador;
+        this.isCompleta = false;
     }
 
     public void setNome(String nome) {
@@ -46,7 +53,7 @@ public class Tarefa {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getDescricao() {
