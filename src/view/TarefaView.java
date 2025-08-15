@@ -64,12 +64,24 @@ public class TarefaView extends JFrame {
         tarefaPanel.setLayout(new BoxLayout(tarefaPanel,BoxLayout.X_AXIS));
         tarefaPanel.setBackground(Color.WHITE);
 
+
         JCheckBox tarefa = new JCheckBox("Teste tarefa", false);
         tarefa.setFont(new Font("Arial", Font.BOLD,26));
-        tarefa.add(Box.createRigidArea(new Dimension(350,50)));
+        tarefa.setBorderPainted(false);
+        tarefa.add(Box.createRigidArea(new Dimension(200,50)));
         tarefa.setBackground(Color.WHITE);
 
+
+
         tarefaPanel.add(tarefa);
+
+        JButton descrip = new JButton("Descrição");
+        descrip.setPreferredSize(new Dimension(20,20));
+        descrip.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tarefaPanel.add(descrip);
+
+
+        tarefaPanel.add(Box.createRigidArea(new Dimension(20,0)));
 
         JButton removerTarefa = new JButton("Remover");
         removerTarefa.setPreferredSize(new Dimension(20,20));
