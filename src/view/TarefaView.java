@@ -2,6 +2,7 @@ package view;
 
 import control.TarefaController;
 import model.Tarefa;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -77,7 +78,7 @@ public class TarefaView extends JFrame {
 
         // Painel de Scroll
         JScrollPane scrollTarefas = new JScrollPane(tarefas);
-        scrollTarefas.setPreferredSize(new Dimension(480, 600));
+        scrollTarefas.setPreferredSize(new Dimension(540, 700));
 
         scrollTarefas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -88,63 +89,49 @@ public class TarefaView extends JFrame {
 
     }
 
-        public void exibirTarefa(String nome, String descricao, boolean concluida) {
+    public void exibirTarefas(List<Tarefa> listaTarefas) {
+        // Limpa o painel antes de renderizar
+        tarefas.removeAll();
 
-        // Painel por Tarefa
-        JPanel tarefaPanel = new JPanel();
-        tarefaPanel.setLayout(new BoxLayout(tarefaPanel, BoxLayout.X_AXIS));
-        tarefaPanel.setBackground(Color.WHITE);
+        for (Tarefa t : listaTarefas) {
+            // Painel por tarefa
+            JPanel tarefaPanel = new JPanel();
+            tarefaPanel.setLayout(new BoxLayout(tarefaPanel, BoxLayout.X_AXIS));
+            tarefaPanel.setBackground(Color.WHITE);
 
+            JCheckBox tarefaCheck = new JCheckBox(t.getNome());
+            tarefaCheck.setSelected(t.isCompleta());
+            tarefaCheck.setFont(new Font("Arial", Font.BOLD, 26));
+            tarefaCheck.setBorderPainted(false);
+            tarefaCheck.setBackground(Color.WHITE);
 
+            tarefaPanel.add(tarefaCheck);
 
-        JCheckBox tarefa = new JCheckBox(nome);
-        tarefa.setSelected(concluida);
-        tarefa.setFont(new Font("Arial", Font.BOLD,26));
-        tarefa.setBorderPainted(false);
-        tarefa.add(Box.createRigidArea(new Dimension(200,50)));
-        tarefa.setBackground(Color.WHITE);
+            JButton descrip = new JButton("Descrição");
+            descrip.setPreferredSize(new Dimension(100, 30));
+            descrip.addActionListener(e ->
+                    JOptionPane.showMessageDialog(descrip, t.getDescricao())
+            );
+            tarefaPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+            tarefaPanel.add(descrip);
 
+            JButton remover = new JButton("Remover");
+            remover.setPreferredSize(new Dimension(100, 30));
+            remover.addActionListener(e -> {
+                control.removerTarefa(t.getId());
+                exibirTarefas(control.getTarefas()); // re-renderiza a lista
+            });
+            tarefaPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+            tarefaPanel.add(remover);
 
-        tarefaPanel.add(tarefa);
+            tarefas.add(tarefaPanel);
+            tarefas.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre tarefas
+        }
 
-
-        JButton descrip = new JButton("Descrição");
-        descrip.setPreferredSize(new Dimension(20,20));
-        descrip.setAlignmentX(Component.CENTER_ALIGNMENT);
-        descrip.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(descrip,descricao);
-            }
-
-
-
-        });
-
-        tarefaPanel.add(descrip);
-
-
-
-
-        tarefaPanel.add(Box.createRigidArea(new Dimension(20,0)));
-
-        JButton removerTarefa = new JButton("Remover");
-        removerTarefa.setPreferredSize(new Dimension(20,20));
-
-        tarefaPanel.add(removerTarefa);
-
-
-        tarefas.add(tarefaPanel);
         tarefas.revalidate();
         tarefas.repaint();
-
-
-
-
-
-
-
     }
+
 
     public void mostrarErro(String msg) {
         System.out.println("Erro: " + msg);
