@@ -28,6 +28,7 @@ public class TarefaController {
                 novaTarefa = new Tarefa(nome,descricao);
             }
             tarefas.add(novaTarefa);
+            view.exibirTarefa(novaTarefa.getNome(), novaTarefa.getDescricao(), novaTarefa.isCompleta());
 
         } catch (IllegalArgumentException e) {
             view.mostrarErro(e.getMessage());
