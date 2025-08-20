@@ -40,6 +40,7 @@ O projeto foi desenvolvido inteiramente por mim como forma de estudo do modelo M
 4. Compile e rode o código através do arquivo *Main.java*
 
    Author: Pedro Cardoso
+   
    Licença: MIT (checar LICENSE.md para mais detalhes)
 
 
